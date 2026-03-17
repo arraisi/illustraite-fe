@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import { useAuthStore } from '../stores/auth';
 import Login from '../views/Login.vue';
 import Register from '../views/Register.vue';
 import Workspace from '../views/Workspace.vue';
@@ -20,8 +21,10 @@ const router = createRouter({
 
 router.beforeEach((to) => {
   if (to.meta.requiresAuth) {
-    // TODO: wire to auth store in Phase 4
-    return true;
+    const authStore = useAuthStore();
+    if (!authStore.isAuthenticated) {
+      return { path: '/login', query: { redirect: to.fullPath } };
+    }
   }
 });
 

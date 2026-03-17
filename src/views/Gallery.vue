@@ -89,7 +89,7 @@ onMounted(() => {
       </div>
 
       <div v-if="gallery.hasMore" class="flex justify-center pt-4">
-        <Button label="Load More" severity="secondary" @click="loadImages" />
+        <Button label="Load More" severity="secondary" :loading="gallery.loading" @click="loadImages" />
       </div>
     </template>
   </div>

@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
+const PAGE_SIZE = 20;
+
 export const useGalleryStore = defineStore('gallery', () => {
   const images = ref([]);
   const hasLoaded = ref(false);
@@ -8,13 +10,13 @@ export const useGalleryStore = defineStore('gallery', () => {
   const hasMore = ref(true);
 
   async function fetchImages(apiInstance) {
-    const res = await apiInstance.get('/gallery', {
-      params: { page: page.value },
+    const res = await apiInstance.get('/generations', {
+      params: { page: page.value, limit: PAGE_SIZE },
     });
 
-    const data = res.data;
-    images.value.push(...data.images);
-    hasMore.value = data.has_more ?? false;
+    const data = Array.isArray(res.data) ? res.data : [];
+    images.value.push(...data);
+    hasMore.value = data.length >= PAGE_SIZE;
     hasLoaded.value = true;
     page.value++;
   }

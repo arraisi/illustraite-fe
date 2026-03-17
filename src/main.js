@@ -14,4 +14,10 @@ app.use(pinia);
 app.use(router);
 app.use(PrimeVue, { unstyled: true, pt: IllustraitePreset });
 app.use(ToastService);
-app.mount('#app');
+
+import { useAuthStore } from './stores/auth';
+const authStore = useAuthStore();
+
+Promise.resolve(authStore.restoreSession())
+  .catch(() => {})
+  .finally(() => app.mount('#app'));

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import { useToast } from 'primevue/usetoast';
 import Select from 'primevue/select';
 import ColorPicker from 'primevue/colorpicker';
@@ -21,13 +21,7 @@ const galleryStore = useGalleryStore();
 const api = useApi();
 const { download } = useImageDownload();
 
-const styleOptions = [
-  { label: 'Minimalist 3D', value: 'minimalist-3d' },
-  { label: 'Isometric', value: 'isometric' },
-  { label: 'Flat', value: 'flat' },
-  { label: 'Clay', value: 'clay' },
-  { label: 'Glassmorphism', value: 'glassmorphism' },
-];
+const styleOptions = ref([]);
 
 const angleOptions = [
   { label: 'Front', value: 'front' },
@@ -37,13 +31,32 @@ const angleOptions = [
   { label: '3/4 View', value: 'three-quarter' },
 ];
 
-const pickerColor = ref('fe9a00');
+onMounted(async () => {
+  try {
+    const res = await api.get('/presets');
+    const presets = Array.isArray(res.data) ? res.data : (res.data.styles ?? []);
+    styleOptions.value = presets.map((s) => ({
+      label: s.name,
+      value: s.id,
+    }));
+  } catch {
+    toast.add({ severity: 'error', summary: 'Failed to load presets', detail: 'Could not fetch style options from server', life: 4000 });
+  }
+});
+
+const primaryColor = ref('fe9a00');
+const secondaryColor = ref('4a90e2');
 let socketCleanup = null;
 
-function addPickedColor() {
-  if (pickerColor.value) {
-    const hex = `#${pickerColor.value}`;
-    generator.addColor(hex);
+function applyPrimaryColor() {
+  if (primaryColor.value) {
+    generator.setPrimaryColor(`#${primaryColor.value}`);
+  }
+}
+
+function applySecondaryColor() {
+  if (secondaryColor.value) {
+    generator.setSecondaryColor(`#${secondaryColor.value}`);
   }
 }
 
@@ -56,12 +69,19 @@ async function generate() {
   generator.startGeneration();
 
   try {
-    const res = await api.post('/generate', {
+    const body = {
       prompt: generator.prompt,
-      style_preset: generator.stylePreset,
-      colors: generator.colors,
+      style_id: generator.stylePreset,
       camera_angle: generator.cameraAngle,
-    });
+    };
+
+    if (generator.colors.primary || generator.colors.secondary) {
+      body.colors = {};
+      if (generator.colors.primary) body.colors.primary = generator.colors.primary;
+      if (generator.colors.secondary) body.colors.secondary = generator.colors.secondary;
+    }
+
+    const res = await api.post('/generate', body);
 
     const { generation_id } = res.data;
 
@@ -74,8 +94,8 @@ async function generate() {
         authStore.deductCredit();
         galleryStore.addImage({
           id: generation_id,
-          url: imageUrl.value,
-          prompt: generator.prompt,
+          image_url: imageUrl.value,
+          user_prompt: generator.prompt,
           created_at: new Date().toISOString(),
         });
         socketCleanup = null;
@@ -87,7 +107,7 @@ async function generate() {
     });
   } catch (err) {
     generator.resetGeneration();
-    toast.add({ severity: 'error', summary: 'Request failed', detail: err.response?.data?.message || err.message, life: 5000 });
+    toast.add({ severity: 'error', summary: 'Request failed', detail: err.response?.data?.error || err.message, life: 5000 });
   }
 }
 </script>
@@ -134,20 +154,33 @@ async function generate() {
 
             <div>
               <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300">Brand Colors</label>
-              <div class="flex items-center gap-3">
-                <ColorPicker v-model="pickerColor" />
-                <Button label="Add" severity="secondary" @click="addPickedColor" class="text-xs" />
-              </div>
-              <div v-if="generator.colors.length" class="mt-3 flex flex-wrap gap-2">
-                <span
-                  v-for="color in generator.colors"
-                  :key="color"
-                  class="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-gray-50 px-2.5 py-1 text-xs dark:border-gray-700 dark:bg-gray-800"
-                >
-                  <span class="h-3 w-3 rounded-full" :style="{ backgroundColor: color }" />
-                  {{ color }}
-                  <button @click="generator.removeColor(color)" class="ml-0.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">&times;</button>
-                </span>
+              <div class="space-y-3">
+                <!-- Primary Color -->
+                <div>
+                  <span class="mb-1 block text-xs text-gray-500 dark:text-gray-400">Primary</span>
+                  <div class="flex items-center gap-3">
+                    <ColorPicker v-model="primaryColor" />
+                    <Button label="Set" severity="secondary" @click="applyPrimaryColor" class="text-xs" />
+                    <span v-if="generator.colors.primary" class="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-gray-50 px-2.5 py-1 text-xs dark:border-gray-700 dark:bg-gray-800">
+                      <span class="h-3 w-3 rounded-full" :style="{ backgroundColor: generator.colors.primary }" />
+                      {{ generator.colors.primary }}
+                      <button @click="generator.clearColor('primary')" class="ml-0.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">&times;</button>
+                    </span>
+                  </div>
+                </div>
+                <!-- Secondary Color -->
+                <div>
+                  <span class="mb-1 block text-xs text-gray-500 dark:text-gray-400">Secondary</span>
+                  <div class="flex items-center gap-3">
+                    <ColorPicker v-model="secondaryColor" />
+                    <Button label="Set" severity="secondary" @click="applySecondaryColor" class="text-xs" />
+                    <span v-if="generator.colors.secondary" class="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-gray-50 px-2.5 py-1 text-xs dark:border-gray-700 dark:bg-gray-800">
+                      <span class="h-3 w-3 rounded-full" :style="{ backgroundColor: generator.colors.secondary }" />
+                      {{ generator.colors.secondary }}
+                      <button @click="generator.clearColor('secondary')" class="ml-0.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">&times;</button>
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

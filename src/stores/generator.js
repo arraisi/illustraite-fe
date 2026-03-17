@@ -2,8 +2,8 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
 export const useGeneratorStore = defineStore('generator', () => {
-  const stylePreset = ref('minimalist-3d');
-  const colors = ref([]);
+  const stylePreset = ref(null);
+  const colors = ref({ primary: null, secondary: null });
   const cameraAngle = ref('front');
   const prompt = ref('');
   const isGenerating = ref(false);
@@ -13,14 +13,16 @@ export const useGeneratorStore = defineStore('generator', () => {
     stylePreset.value = value;
   }
 
-  function addColor(color) {
-    if (!colors.value.includes(color)) {
-      colors.value.push(color);
-    }
+  function setPrimaryColor(color) {
+    colors.value = { ...colors.value, primary: color };
   }
 
-  function removeColor(color) {
-    colors.value = colors.value.filter((c) => c !== color);
+  function setSecondaryColor(color) {
+    colors.value = { ...colors.value, secondary: color };
+  }
+
+  function clearColor(key) {
+    colors.value = { ...colors.value, [key]: null };
   }
 
   function setCameraAngle(value) {
@@ -54,8 +56,9 @@ export const useGeneratorStore = defineStore('generator', () => {
     isGenerating,
     generatedImageUrl,
     setStylePreset,
-    addColor,
-    removeColor,
+    setPrimaryColor,
+    setSecondaryColor,
+    clearColor,
     setCameraAngle,
     setPrompt,
     startGeneration,

@@ -68,7 +68,7 @@ export default {
     dropdownIcon: { class: 'h-4 w-4' },
     overlay: {
       class:
-        'mt-1 rounded-xl border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-900',
+        'mt-1 max-h-60 overflow-y-auto rounded-xl border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-900',
     },
     list: { class: 'py-1' },
     option: ({ context }) => ({

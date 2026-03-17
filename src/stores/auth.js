@@ -24,31 +24,35 @@ export const useAuthStore = defineStore('auth', () => {
 
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
-      throw new Error(err.message || 'Login failed');
+      throw new Error(err.error || 'Login failed');
     }
 
     const data = await res.json();
-    setAuth(data.token, data.user);
-    creditBalance.value = data.user.credits ?? 0;
+    const userData = data.user ?? data;
+    setAuth(data.token, userData);
+    creditBalance.value = userData.credit_balance ?? 0;
   }
 
-  async function register(name, email, password) {
+  async function register(email, password) {
     const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, email, password }),
+      body: JSON.stringify({ email, password }),
     });
 
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
-      throw new Error(err.message || 'Registration failed');
+      throw new Error(err.error || 'Registration failed');
     }
 
-    return res.json();
+    const data = await res.json();
+    const userData = data.user ?? data;
+    setAuth(data.token, userData);
+    creditBalance.value = userData.credit_balance ?? 0;
   }
 
   async function fetchProfile() {
-    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/me`, {
+    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/users/me`, {
       headers: { Authorization: `Bearer ${token.value}` },
     });
 
@@ -58,8 +62,9 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     const data = await res.json();
-    user.value = data.user;
-    creditBalance.value = data.user.credits ?? 0;
+    const userData = data.user ?? data;
+    user.value = userData;
+    creditBalance.value = userData.credit_balance ?? 0;
   }
 
   function deductCredit() {
@@ -75,11 +80,30 @@ export const useAuthStore = defineStore('auth', () => {
     localStorage.removeItem('token');
   }
 
-  function restoreSession() {
+  async function restoreSession() {
     const stored = localStorage.getItem('token');
-    if (stored) {
-      token.value = stored;
-      return fetchProfile();
+    if (!stored) return;
+
+    token.value = stored;
+
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/users/me`, {
+        headers: { Authorization: `Bearer ${stored}` },
+      });
+
+      if (res.status === 401) {
+        logout();
+        return;
+      }
+
+      if (res.ok) {
+        const data = await res.json();
+        const userData = data.user ?? data;
+        user.value = userData;
+        creditBalance.value = userData.credit_balance ?? 0;
+      }
+    } catch {
+      // Network error — keep the token, don't log out
     }
   }
 

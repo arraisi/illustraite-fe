@@ -64,9 +64,9 @@ const packages = [
           <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ pkg.credits }} credits</p>
 
           <Button
-            :label="`Buy ${pkg.credits} Credits`"
-            :class="pkg.popular ? '' : ''"
-            :severity="pkg.popular ? undefined : 'secondary'"
+            label="Coming Soon"
+            severity="secondary"
+            disabled
             class="mt-6 w-full"
           />
         </div>

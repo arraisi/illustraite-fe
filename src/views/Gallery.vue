@@ -68,21 +68,21 @@ onMounted(() => {
         >
           <div class="relative overflow-hidden rounded-t-2xl">
             <img
-              :src="image.url"
-              :alt="image.prompt"
+              :src="image.image_url"
+              :alt="image.user_prompt"
               class="h-52 w-full object-cover"
             />
             <div class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition group-hover:opacity-100">
               <Button
                 label="Download"
                 severity="secondary"
-                @click="download(image.url)"
+                @click="download(image.image_url)"
                 class="text-xs"
               />
             </div>
           </div>
           <div class="p-4">
-            <p class="line-clamp-2 text-sm text-gray-700 dark:text-gray-300">{{ image.prompt }}</p>
+            <p class="line-clamp-2 text-sm text-gray-700 dark:text-gray-300">{{ image.user_prompt }}</p>
             <p class="mt-1 text-xs text-gray-400">{{ new Date(image.created_at).toLocaleDateString() }}</p>
           </div>
         </div>

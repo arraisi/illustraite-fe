@@ -5,6 +5,7 @@ import Register from '../views/Register.vue';
 import Workspace from '../views/Workspace.vue';
 import Gallery from '../views/Gallery.vue';
 import Billing from '../views/Billing.vue';
+import NotFound from '../views/NotFound.vue';
 
 const routes = [
   { path: '/login', component: Login, meta: { requiresAuth: false } },
@@ -12,6 +13,7 @@ const routes = [
   { path: '/', component: Workspace, meta: { requiresAuth: true } },
   { path: '/gallery', component: Gallery, meta: { requiresAuth: true } },
   { path: '/billing', component: Billing, meta: { requiresAuth: true } },
+  { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
 ];
 
 const router = createRouter({

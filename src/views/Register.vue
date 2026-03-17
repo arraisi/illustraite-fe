@@ -11,7 +11,6 @@ const router = useRouter();
 const toast = useToast();
 const authStore = useAuthStore();
 
-const name = ref('');
 const email = ref('');
 const password = ref('');
 const confirmPassword = ref('');
@@ -25,9 +24,8 @@ async function handleRegister() {
 
   loading.value = true;
   try {
-    await authStore.register(name.value, email.value, password.value);
-    toast.add({ severity: 'success', summary: 'Account created', detail: 'You can now sign in', life: 3000 });
-    router.push('/login');
+    await authStore.register(email.value, password.value);
+    router.push('/');
   } catch (err) {
     toast.add({ severity: 'error', summary: 'Registration failed', detail: err.message, life: 4000 });
   } finally {
@@ -49,16 +47,6 @@ async function handleRegister() {
 
       <div class="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-950">
         <form @submit.prevent="handleRegister" class="space-y-5">
-          <div>
-            <label for="name" class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
-            <InputText
-              id="name"
-              v-model="name"
-              placeholder="Your name"
-              required
-            />
-          </div>
-
           <div>
             <label for="email" class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
             <InputText

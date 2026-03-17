@@ -8,7 +8,7 @@ export function useGenerationSocket(generationId) {
 
   const url = `${import.meta.env.VITE_WS_BASE_URL}/status?generation_id=${generationId}`;
 
-  const { data, close, ws } = useWebSocket(url, {
+  const { data, close } = useWebSocket(url, {
     autoReconnect: false,
     onConnected() {
       status.value = 'connected';

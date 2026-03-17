@@ -22,6 +22,31 @@ export default {
     loadingIcon: { class: 'animate-spin text-base' },
   },
 
+  inputtext: {
+    root: {
+      class:
+        'w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 shadow-sm transition placeholder:text-gray-400 focus:border-[#fe9a00] focus:outline-none focus:ring-2 focus:ring-[#fe9a00]/30 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder:text-gray-500 dark:focus:border-[#fe9a00]',
+    },
+  },
+
+  password: {
+    root: { class: 'relative w-full' },
+    pcInputText: {
+      root: {
+        class:
+          'w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 shadow-sm transition placeholder:text-gray-400 focus:border-[#fe9a00] focus:outline-none focus:ring-2 focus:ring-[#fe9a00]/30 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder:text-gray-500 dark:focus:border-[#fe9a00]',
+      },
+    },
+    maskIcon: { class: 'absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-400' },
+    unmaskIcon: { class: 'absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-400' },
+  },
+
+  progressspinner: {
+    root: { class: 'relative mx-auto h-12 w-12' },
+    spin: { class: 'animate-spin stroke-[#fe9a00]' },
+    circle: { class: 'stroke-current' },
+  },
+
   textarea: {
     root: {
       class:

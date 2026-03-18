@@ -29,8 +29,8 @@ function handleLogout() {
 <template>
   <nav class="border-b border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950">
     <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-      <RouterLink to="/" class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-        Illustr<span class="text-[#fe9a00]">AI</span>te
+      <RouterLink to="/" class="flex items-center">
+        <img src="/icon/wordmarkicon.svg" alt="IllustrAIte" class="h-8" />
       </RouterLink>
 
       <!-- Mobile hamburger -->
@@ -52,7 +52,7 @@ function handleLogout() {
             :key="link.to"
             :to="link.to"
             :class="isActive(link.to)
-              ? 'bg-amber-100 text-amber-900 dark:bg-amber-900/30 dark:text-amber-400'
+              ? 'bg-[#FF5722]/10 text-[#FF5722] dark:bg-[#FF5722]/20 dark:text-[#FF8A65]'
               : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white'"
             class="rounded-lg px-3 py-2 text-sm font-medium transition"
           >
@@ -61,7 +61,7 @@ function handleLogout() {
         </div>
 
         <div class="flex items-center gap-3">
-          <span class="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-800 dark:bg-amber-900/30 dark:text-amber-400">
+          <span class="rounded-full bg-[#FF5722]/10 px-3 py-1 text-xs font-semibold text-[#FF5722] dark:bg-[#FF5722]/20 dark:text-[#FF8A65]">
             {{ authStore.creditBalance }} credits
           </span>
 
@@ -105,7 +105,7 @@ function handleLogout() {
           :key="link.to"
           :to="link.to"
           :class="isActive(link.to)
-            ? 'bg-amber-100 text-amber-900 dark:bg-amber-900/30 dark:text-amber-400'
+            ? 'bg-[#FF5722]/10 text-[#FF5722] dark:bg-[#FF5722]/20 dark:text-[#FF8A65]'
             : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white'"
           class="rounded-lg px-3 py-2 text-sm font-medium transition"
           @click="mobileMenuOpen = false"
@@ -115,7 +115,7 @@ function handleLogout() {
       </div>
 
       <div class="mt-3 flex items-center justify-between border-t border-gray-200 pt-3 dark:border-gray-800">
-        <span class="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-800 dark:bg-amber-900/30 dark:text-amber-400">
+        <span class="rounded-full bg-[#FF5722]/10 px-3 py-1 text-xs font-semibold text-[#FF5722] dark:bg-[#FF5722]/20 dark:text-[#FF8A65]">
           {{ authStore.creditBalance }} credits
         </span>
 

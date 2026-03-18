@@ -44,7 +44,7 @@ onMounted(async () => {
   }
 });
 
-const primaryColor = ref('fe9a00');
+const primaryColor = ref('FF5722');
 const secondaryColor = ref('4a90e2');
 let socketCleanup = null;
 

@@ -2,15 +2,15 @@
 import { ref, computed, watch, onMounted, nextTick } from 'vue';
 import { onClickOutside } from '@vueuse/core';
 
-const model = defineModel({ type: String, default: 'fe9a00' });
+const model = defineModel({ type: String, default: 'FF5722' });
 
 const props = defineProps({
   presets: {
     type: Array,
     default: () => [
-      'fe9a00', 'e74c3c', 'e91e63', '9b59b6',
-      '3498db', '4a90e2', '1abc9c', '2ecc71',
-      'f39c12', '34495e', '95a5a6', '000000',
+      'FF5722', 'e74c3c', 'e91e63', '9b59b6',
+      '3498db', '00ADB5', '1abc9c', '2ecc71',
+      'FF8A65', '303841', '95a5a6', '000000',
     ],
   },
 });
@@ -355,7 +355,7 @@ onMounted(() => {
           :value="hexInput"
           @input="onHexInput"
           maxlength="6"
-          class="w-full rounded-md border border-gray-200 bg-gray-50 px-2 py-1 font-mono text-xs text-gray-900 focus:border-[#fe9a00] focus:outline-none focus:ring-1 focus:ring-[#fe9a00]/30 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
+          class="w-full rounded-md border border-gray-200 bg-gray-50 px-2 py-1 font-mono text-xs text-gray-900 focus:border-[#FF5722] focus:outline-none focus:ring-1 focus:ring-[#FF5722]/30 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
           spellcheck="false"
         />
       </div>
@@ -368,7 +368,7 @@ onMounted(() => {
             type="number" min="0" max="255"
             :value="rInput"
             @input="(e) => { rInput = e.target.value; onRgbInput(); }"
-            class="w-full rounded-md border border-gray-200 bg-gray-50 px-1.5 py-1 text-center font-mono text-xs text-gray-900 focus:border-[#fe9a00] focus:outline-none focus:ring-1 focus:ring-[#fe9a00]/30 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+            class="w-full rounded-md border border-gray-200 bg-gray-50 px-1.5 py-1 text-center font-mono text-xs text-gray-900 focus:border-[#FF5722] focus:outline-none focus:ring-1 focus:ring-[#FF5722]/30 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
           />
         </div>
         <div class="flex-1">
@@ -377,7 +377,7 @@ onMounted(() => {
             type="number" min="0" max="255"
             :value="gInput"
             @input="(e) => { gInput = e.target.value; onRgbInput(); }"
-            class="w-full rounded-md border border-gray-200 bg-gray-50 px-1.5 py-1 text-center font-mono text-xs text-gray-900 focus:border-[#fe9a00] focus:outline-none focus:ring-1 focus:ring-[#fe9a00]/30 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+            class="w-full rounded-md border border-gray-200 bg-gray-50 px-1.5 py-1 text-center font-mono text-xs text-gray-900 focus:border-[#FF5722] focus:outline-none focus:ring-1 focus:ring-[#FF5722]/30 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
           />
         </div>
         <div class="flex-1">
@@ -386,7 +386,7 @@ onMounted(() => {
             type="number" min="0" max="255"
             :value="bInput"
             @input="(e) => { bInput = e.target.value; onRgbInput(); }"
-            class="w-full rounded-md border border-gray-200 bg-gray-50 px-1.5 py-1 text-center font-mono text-xs text-gray-900 focus:border-[#fe9a00] focus:outline-none focus:ring-1 focus:ring-[#fe9a00]/30 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+            class="w-full rounded-md border border-gray-200 bg-gray-50 px-1.5 py-1 text-center font-mono text-xs text-gray-900 focus:border-[#FF5722] focus:outline-none focus:ring-1 focus:ring-[#FF5722]/30 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
           />
         </div>
       </div>

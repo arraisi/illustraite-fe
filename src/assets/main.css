@@ -4,9 +4,12 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-accent: #fe9a00;
-  --color-accent-light: #ffb840;
-  --color-accent-dark: #e08800;
+  --color-accent: #FF5722;
+  --color-accent-light: #FF8A65;
+  --color-accent-dark: #E64A19;
+  --color-secondary: #00ADB5;
+  --color-surface-light: #EEEEEE;
+  --color-surface-dark: #303841;
 
   --font-display: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
   --font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;

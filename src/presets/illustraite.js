@@ -4,7 +4,7 @@ export default {
       class: [
         'inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
         {
-          'bg-[#fe9a00] text-white shadow-sm hover:brightness-110 focus:ring-[#fe9a00]/50':
+          'bg-[#FF5722] text-white shadow-sm hover:brightness-110 focus:ring-[#FF5722]/50':
             !props.severity || props.severity === 'primary',
           'bg-gray-100 text-gray-700 hover:bg-gray-200 focus:ring-gray-300 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700':
             props.severity === 'secondary',
@@ -25,7 +25,7 @@ export default {
   inputtext: {
     root: {
       class:
-        'w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 shadow-sm transition placeholder:text-gray-400 focus:border-[#fe9a00] focus:outline-none focus:ring-2 focus:ring-[#fe9a00]/30 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder:text-gray-500 dark:focus:border-[#fe9a00]',
+        'w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 shadow-sm transition placeholder:text-gray-400 focus:border-[#FF5722] focus:outline-none focus:ring-2 focus:ring-[#FF5722]/30 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder:text-gray-500 dark:focus:border-[#FF5722]',
     },
   },
 
@@ -34,7 +34,7 @@ export default {
     pcInputText: {
       root: {
         class:
-          'w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 shadow-sm transition placeholder:text-gray-400 focus:border-[#fe9a00] focus:outline-none focus:ring-2 focus:ring-[#fe9a00]/30 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder:text-gray-500 dark:focus:border-[#fe9a00]',
+          'w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 shadow-sm transition placeholder:text-gray-400 focus:border-[#FF5722] focus:outline-none focus:ring-2 focus:ring-[#FF5722]/30 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder:text-gray-500 dark:focus:border-[#FF5722]',
       },
     },
     maskIcon: { class: 'absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-400' },
@@ -43,14 +43,14 @@ export default {
 
   progressspinner: {
     root: { class: 'relative mx-auto h-12 w-12' },
-    spin: { class: 'animate-spin stroke-[#fe9a00]' },
+    spin: { class: 'animate-spin stroke-[#FF5722]' },
     circle: { class: 'stroke-current' },
   },
 
   textarea: {
     root: {
       class:
-        'w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 shadow-sm transition placeholder:text-gray-400 focus:border-[#fe9a00] focus:outline-none focus:ring-2 focus:ring-[#fe9a00]/30 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder:text-gray-500 dark:focus:border-[#fe9a00]',
+        'w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 shadow-sm transition placeholder:text-gray-400 focus:border-[#FF5722] focus:outline-none focus:ring-2 focus:ring-[#FF5722]/30 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder:text-gray-500 dark:focus:border-[#FF5722]',
     },
   },
 
@@ -75,7 +75,7 @@ export default {
       class: [
         'cursor-pointer px-4 py-2.5 text-sm transition',
         {
-          'bg-[#fe9a00]/10 text-[#fe9a00] dark:bg-[#fe9a00]/20': context.selected,
+          'bg-[#FF5722]/10 text-[#FF5722] dark:bg-[#FF5722]/20': context.selected,
           'text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800':
             !context.selected,
         },

@@ -36,7 +36,7 @@ async function handleLogin() {
     <div class="w-full max-w-md">
       <div class="mb-8 text-center">
         <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
-          Illustr<span class="text-[#fe9a00]">AI</span>te
+          Illustr<span class="text-[#FF5722]">AI</span>te
         </h1>
         <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Sign in to your account</p>
       </div>
@@ -75,7 +75,7 @@ async function handleLogin() {
 
         <p class="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
           Don't have an account?
-          <RouterLink to="/register" class="font-medium text-[#fe9a00] hover:underline">Create one</RouterLink>
+          <RouterLink to="/register" class="font-medium text-[#FF5722] hover:underline">Create one</RouterLink>
         </p>
       </div>
     </div>

@@ -109,3 +109,5 @@ dist
 .tern-port
 
 *_plan.md
+
+.DS_Store

@@ -87,27 +87,6 @@ export default {
     },
   },
 
-  colorpicker: {
-    root: { class: 'inline-block' },
-    preview: {
-      class:
-        'h-8 w-8 cursor-pointer rounded-lg border border-gray-200 shadow-sm transition hover:shadow dark:border-gray-700',
-    },
-    panel: {
-      class:
-        'rounded-xl border border-gray-200 bg-white p-3 shadow-lg dark:border-gray-700 dark:bg-gray-900',
-    },
-    colorSelector: { class: 'relative mb-2 h-40 w-40 rounded-lg' },
-    colorHandle: {
-      class: 'absolute h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white shadow',
-    },
-    hue: { class: 'relative h-4 w-full rounded-lg' },
-    hueHandle: {
-      class: 'absolute -ml-1 -mt-0.5 h-5 w-2 rounded border border-white shadow',
-    },
-    colorBackground: { class: 'rounded-lg' },
-  },
-
   toast: {
     root: { class: 'pointer-events-none fixed z-50 flex w-96 flex-col gap-3 p-4' },
     message: ({ props }) => ({

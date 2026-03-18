@@ -2,8 +2,8 @@
 import { ref, watch, onMounted } from 'vue';
 import { useToast } from 'primevue/usetoast';
 import Select from 'primevue/select';
-import ColorPicker from 'primevue/colorpicker';
 import Textarea from 'primevue/textarea';
+import ColorPickerPopup from '../components/ui/ColorPickerPopup.vue';
 import Button from 'primevue/button';
 import Skeleton from 'primevue/skeleton';
 import Toast from 'primevue/toast';
@@ -48,17 +48,13 @@ const primaryColor = ref('fe9a00');
 const secondaryColor = ref('4a90e2');
 let socketCleanup = null;
 
-function applyPrimaryColor() {
-  if (primaryColor.value) {
-    generator.setPrimaryColor(`#${primaryColor.value}`);
-  }
-}
+watch(primaryColor, (v) => {
+  if (v) generator.setPrimaryColor(`#${v}`);
+});
 
-function applySecondaryColor() {
-  if (secondaryColor.value) {
-    generator.setSecondaryColor(`#${secondaryColor.value}`);
-  }
-}
+watch(secondaryColor, (v) => {
+  if (v) generator.setSecondaryColor(`#${v}`);
+});
 
 async function generate() {
   if (!generator.prompt.trim()) {
@@ -159,9 +155,8 @@ async function generate() {
                 <div>
                   <span class="mb-1 block text-xs text-gray-500 dark:text-gray-400">Primary</span>
                   <div class="flex items-center gap-3">
-                    <ColorPicker v-model="primaryColor" />
-                    <Button label="Set" severity="secondary" @click="applyPrimaryColor" class="text-xs" />
-                    <span v-if="generator.colors.primary" class="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-gray-50 px-2.5 py-1 text-xs dark:border-gray-700 dark:bg-gray-800">
+                    <ColorPickerPopup v-model="primaryColor" />
+                    <span v-if="generator.colors.primary" class="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-gray-50 px-2.5 py-1 text-xs text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">
                       <span class="h-3 w-3 rounded-full" :style="{ backgroundColor: generator.colors.primary }" />
                       {{ generator.colors.primary }}
                       <button @click="generator.clearColor('primary')" class="ml-0.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">&times;</button>
@@ -172,9 +167,8 @@ async function generate() {
                 <div>
                   <span class="mb-1 block text-xs text-gray-500 dark:text-gray-400">Secondary</span>
                   <div class="flex items-center gap-3">
-                    <ColorPicker v-model="secondaryColor" />
-                    <Button label="Set" severity="secondary" @click="applySecondaryColor" class="text-xs" />
-                    <span v-if="generator.colors.secondary" class="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-gray-50 px-2.5 py-1 text-xs dark:border-gray-700 dark:bg-gray-800">
+                    <ColorPickerPopup v-model="secondaryColor" />
+                    <span v-if="generator.colors.secondary" class="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-gray-50 px-2.5 py-1 text-xs text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">
                       <span class="h-3 w-3 rounded-full" :style="{ backgroundColor: generator.colors.secondary }" />
                       {{ generator.colors.secondary }}
                       <button @click="generator.clearColor('secondary')" class="ml-0.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">&times;</button>

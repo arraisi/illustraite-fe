@@ -111,3 +111,5 @@ dist
 *_plan.md
 
 .DS_Store
+
+.idea/

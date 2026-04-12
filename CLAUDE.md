@@ -66,3 +66,10 @@ Target UI style: [isometricon.com](https://www.isometricon.com/) — modern mini
 - All components use Vue 3 Composition API with `<script setup>`
 - Tailwind v4 — uses `@tailwindcss/vite` plugin, `@theme` in CSS for customization (no `tailwind.config.js`)
 - Node.js >= 18 required
+
+## Active Technologies
+- JavaScript (Vue 3.4+ SFC with `<script setup>`) + Vue 3, PrimeVue (unstyled), Tailwind CSS v4 (001-advance-brand-config)
+- N/A (component-local UI state only) (001-advance-brand-config)
+
+## Recent Changes
+- 001-advance-brand-config: Added JavaScript (Vue 3.4+ SFC with `<script setup>`) + Vue 3, PrimeVue (unstyled), Tailwind CSS v4

@@ -44,8 +44,9 @@ onMounted(async () => {
   }
 });
 
-const primaryColor = ref('FF5722');
-const secondaryColor = ref('4a90e2');
+const showAdvanced = ref(false);
+const primaryColor = ref(null);
+const secondaryColor = ref(null);
 let socketCleanup = null;
 
 watch(primaryColor, (v) => {
@@ -148,31 +149,54 @@ async function generate() {
               />
             </div>
 
+            <!-- Advanced Toggle -->
             <div>
-              <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300">Brand Colors</label>
-              <div class="space-y-3">
-                <!-- Primary Color -->
-                <div>
-                  <span class="mb-1 block text-xs text-gray-500 dark:text-gray-400">Primary</span>
-                  <div class="flex items-center gap-3">
-                    <ColorPickerPopup v-model="primaryColor" />
-                    <span v-if="generator.colors.primary" class="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-gray-50 px-2.5 py-1 text-xs text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">
-                      <span class="h-3 w-3 rounded-full" :style="{ backgroundColor: generator.colors.primary }" />
-                      {{ generator.colors.primary }}
-                      <button @click="generator.clearColor('primary')" class="ml-0.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">&times;</button>
-                    </span>
-                  </div>
-                </div>
-                <!-- Secondary Color -->
-                <div>
-                  <span class="mb-1 block text-xs text-gray-500 dark:text-gray-400">Secondary</span>
-                  <div class="flex items-center gap-3">
-                    <ColorPickerPopup v-model="secondaryColor" />
-                    <span v-if="generator.colors.secondary" class="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-gray-50 px-2.5 py-1 text-xs text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">
-                      <span class="h-3 w-3 rounded-full" :style="{ backgroundColor: generator.colors.secondary }" />
-                      {{ generator.colors.secondary }}
-                      <button @click="generator.clearColor('secondary')" class="ml-0.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">&times;</button>
-                    </span>
+              <button
+                @click="showAdvanced = !showAdvanced"
+                :aria-expanded="showAdvanced"
+                class="flex w-full items-center gap-1.5 text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
+              >
+                <svg
+                  class="h-4 w-4 transition-transform duration-200"
+                  :class="{ 'rotate-90': showAdvanced }"
+                  fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+                Advanced
+              </button>
+
+              <div
+                class="grid transition-all duration-300 ease-in-out"
+                :class="showAdvanced ? 'grid-rows-[1fr] opacity-100 mt-3' : 'grid-rows-[0fr] opacity-0'"
+              >
+                <div class="overflow-hidden">
+                  <div class="space-y-3">
+                    <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300">Brand Colors</label>
+                    <!-- Primary Color -->
+                    <div>
+                      <span class="mb-1 block text-xs text-gray-500 dark:text-gray-400">Primary</span>
+                      <div class="flex items-center gap-3">
+                        <ColorPickerPopup v-model="primaryColor" />
+                        <span v-if="generator.colors.primary" class="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-gray-50 px-2.5 py-1 text-xs text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">
+                          <span class="h-3 w-3 rounded-full" :style="{ backgroundColor: generator.colors.primary }" />
+                          {{ generator.colors.primary }}
+                          <button @click="generator.clearColor('primary')" class="ml-0.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">&times;</button>
+                        </span>
+                      </div>
+                    </div>
+                    <!-- Secondary Color -->
+                    <div>
+                      <span class="mb-1 block text-xs text-gray-500 dark:text-gray-400">Secondary</span>
+                      <div class="flex items-center gap-3">
+                        <ColorPickerPopup v-model="secondaryColor" />
+                        <span v-if="generator.colors.secondary" class="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-gray-50 px-2.5 py-1 text-xs text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">
+                          <span class="h-3 w-3 rounded-full" :style="{ backgroundColor: generator.colors.secondary }" />
+                          {{ generator.colors.secondary }}
+                          <button @click="generator.clearColor('secondary')" class="ml-0.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">&times;</button>
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -16,9 +16,13 @@ const props = defineProps({
 });
 
 const open = ref(false);
+const triggerRef = ref(null);
 const popupRef = ref(null);
 const satCanvasRef = ref(null);
 const hueCanvasRef = ref(null);
+
+// Popup position (fixed, relative to trigger)
+const popupStyle = ref({});
 
 // Internal HSV state
 const hue = ref(0);
@@ -263,6 +267,14 @@ function selectPreset(hex) {
 function toggle() {
   open.value = !open.value;
   if (open.value) {
+    const rect = triggerRef.value.getBoundingClientRect();
+    popupStyle.value = {
+      position: 'fixed',
+      left: rect.left + 'px',
+      top: (rect.bottom + 8) + 'px',
+      width: '216px',
+      zIndex: 9999,
+    };
     nextTick(() => {
       drawSatCanvas();
       drawHueCanvas();
@@ -270,8 +282,9 @@ function toggle() {
   }
 }
 
-// Click outside to close
-onClickOutside(popupRef, () => {
+// Click outside to close (ignore clicks on the trigger button)
+onClickOutside(popupRef, (event) => {
+  if (triggerRef.value && triggerRef.value.contains(event.target)) return;
   open.value = false;
 });
 
@@ -290,15 +303,17 @@ onMounted(() => {
     hue.value = h;
     sat.value = s;
     val.value = v;
-    syncInputsFromHsv();
   }
+  // Always sync inputs so hex/RGB fields reflect current HSV state
+  syncInputsFromHsv();
 });
 </script>
 
 <template>
-  <div ref="popupRef" class="relative inline-block">
+  <div class="relative inline-block">
     <!-- Trigger swatch -->
     <button
+      ref="triggerRef"
       @click="toggle"
       class="h-8 w-8 cursor-pointer rounded-lg border border-gray-200 shadow-sm transition hover:shadow dark:border-gray-700"
       :style="{ backgroundColor: '#' + hexValue }"
@@ -306,12 +321,14 @@ onMounted(() => {
       aria-label="Pick color"
     />
 
-    <!-- Popup panel -->
-    <div
-      v-if="open"
-      class="absolute left-0 top-full z-50 mt-2 rounded-xl border border-gray-200 bg-white p-3 shadow-lg dark:border-gray-700 dark:bg-gray-900"
-      style="width: 216px;"
-    >
+    <!-- Popup panel (teleported to body to avoid overflow clipping) -->
+    <Teleport to="body">
+      <div
+        v-if="open"
+        ref="popupRef"
+        class="rounded-xl border border-gray-200 bg-white p-3 shadow-lg dark:border-gray-700 dark:bg-gray-900"
+        :style="popupStyle"
+      >
       <!-- Saturation/Brightness canvas -->
       <div class="relative mb-2" :style="{ width: SAT_SIZE + 'px', height: SAT_SIZE + 'px' }">
         <canvas
@@ -403,6 +420,7 @@ onMounted(() => {
           :aria-label="'Select color #' + color"
         />
       </div>
-    </div>
+      </div>
+    </Teleport>
   </div>
 </template>

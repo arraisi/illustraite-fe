@@ -245,6 +245,7 @@ onUnmounted(() => {
           <div class="rounded-lg border border-amber-200 bg-amber-50 p-3 text-center text-xs text-amber-800 dark:border-amber-900/50 dark:bg-amber-950/30 dark:text-amber-300">
             <p class="font-semibold">⚠️ Please wait — do not refresh or leave this page.</p>
             <p class="mt-1">Image generation is in progress and may take 10–30 seconds.</p>
+            <p class="mt-2 text-amber-700 dark:text-amber-400">Once finished, the result will also be available on the <span class="font-semibold">Gallery</span> page.</p>
           </div>
         </div>
 

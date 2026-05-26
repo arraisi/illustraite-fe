@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, onMounted } from 'vue';
+import { ref, watch, onMounted, onUnmounted } from 'vue';
 import { useToast } from 'primevue/usetoast';
 import Select from 'primevue/select';
 import Textarea from 'primevue/textarea';
@@ -31,7 +31,15 @@ const angleOptions = [
   { label: '3/4 View', value: 'three-quarter' },
 ];
 
+const beforeUnloadHandler = (e) => {
+  if (generator.isGenerating) {
+    e.preventDefault();
+    e.returnValue = '';
+  }
+};
+
 onMounted(async () => {
+  window.addEventListener('beforeunload', beforeUnloadHandler);
   try {
     const res = await api.get('/presets');
     const presets = Array.isArray(res.data) ? res.data : (res.data.styles ?? []);
@@ -107,6 +115,10 @@ async function generate() {
     toast.add({ severity: 'error', summary: 'Request failed', detail: err.response?.data?.error || err.message, life: 5000 });
   }
 }
+
+onUnmounted(() => {
+  window.removeEventListener('beforeunload', beforeUnloadHandler);
+});
 </script>
 
 <template>
@@ -230,6 +242,10 @@ async function generate() {
         <div v-if="generator.isGenerating" class="space-y-4">
           <Skeleton width="100%" height="320px" />
           <p class="text-center text-sm text-gray-400">Generating your asset...</p>
+          <div class="rounded-lg border border-amber-200 bg-amber-50 p-3 text-center text-xs text-amber-800 dark:border-amber-900/50 dark:bg-amber-950/30 dark:text-amber-300">
+            <p class="font-semibold">⚠️ Please wait — do not refresh or leave this page.</p>
+            <p class="mt-1">Image generation is in progress and may take 10–30 seconds.</p>
+          </div>
         </div>
 
         <div v-else-if="generator.generatedImageUrl" class="space-y-4">
